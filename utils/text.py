@@ -1,6 +1,9 @@
 from typing import List, Callable
 import string
 import numpy as np
+from wordcloud import WordCloud
+from nltk.corpus import stopwords
+import matplotlib.pyplot as plt
 
 class SparseTextProcessor:
 
@@ -72,4 +75,16 @@ class SparseTextProcessor:
         texts_str = [" ".join(tokens) for tokens in text_tokens]
 
         return texts_str
+
+def plot_wordclouds(text: str, title: str, **kargs) -> None:
+
+    sw = stopwords.words("portuguese")
+
+    wc = WordCloud(stopwords=sw, **kargs)
+    cloud = wc.generate(text)
+    ax = plt.imshow(cloud, interpolation='bilinear').axes
+    ax.grid(False)
+    ax.set_title(title)
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
         
